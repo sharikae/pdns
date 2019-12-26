@@ -41,3 +41,6 @@ powerdnsadmin/static/generated
 .webassets-cache
 .venv*
 .pytest_cache
+
+.env.pdns
+.env.pdnsadmin

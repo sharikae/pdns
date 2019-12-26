@@ -5,33 +5,44 @@ services:
     build:
       dockerfile: docker/Dockerfile
       context: .
-    container_name: powerdns_admin
+    container_name: pdnsadmin
     ports:
       - "35000:80"
     logging:
       driver: json-file
       options:
         max-size: 50m
-    environment:
-      - SQLALCHEMY_DATABASE_URI=mysql://pda:changeme@host.docker.internal/pda
-      - GUINCORN_TIMEOUT=60
-      - GUNICORN_WORKERS=2
-      - GUNICORN_LOGLEVEL=DEBUG
+    env_file: .env.pdnsadmin
+    depends_on:
+      - pdnsadmin_db
+    restart: unless-stopped
+
+  pdnsadmin_db:
+    image: mysql:5.7
+    container_name: pdnsadmin_db
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - ./db/pdnsadmin_data:/var/lib/mysql
+    env_file: .env.pdnsadmin
+    restart: unless-stopped
+
   pdns:
     build:
       dockerfile: docker/pdns/Dockerfile
       context: .
+    container_name: pdns
     ports:
       - "53:53"
       - "53:53/udp"
       - "34000:80"
-    environment:
-      - PDNS_ALLOW_AXFR_IPS=127.0.0.1
-      - PDNS_DISTRIBUTOR_THREADS=3
-      - PDNS_CACHE_TTL=20
-      - PDNS_RECURSIVE_CACHE_TTL=10
-      - DB_ENV_MYSQL_ROOT_PASSWORD=changeme
-  db:
+    env_file: .env.pdns
+    depends_on:
+      - pdns_db
+    restart: unless-stopped
+
+  pdns_db:
     image: mysql:5.7
-    environment:
-      - MYSQL_ROOT_PASSWORD=changeme
+    container_name: pdns_db
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    env_file: .env.pdns
+    restart: unless-stopped
