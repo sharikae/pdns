@@ -1,8 +1,10 @@
 version: "3"
 
 services:
-  app:
-    image: ngoduykhanh/powerdns-admin:latest
+  pdnsadmin:
+    build:
+      dockerfile: docker/Dockerfile
+      context: .
     container_name: powerdns_admin
     ports:
       - "9191:80"
@@ -15,3 +17,21 @@ services:
       - GUINCORN_TIMEOUT=60
       - GUNICORN_WORKERS=2
       - GUNICORN_LOGLEVEL=DEBUG
+  pdns:
+    build:
+      dockerfile: docker/pdns/Dockerfile
+      context: .
+    ports:
+      - "53:53"
+      - "53:53/udp"
+      - "34000:80"
+    environment:
+      - PDNS_ALLOW_AXFR_IPS=127.0.0.1
+      - PDNS_DISTRIBUTOR_THREADS=3
+      - PDNS_CACHE_TTL=20
+      - PDNS_RECURSIVE_CACHE_TTL=10
+      - DB_ENV_MYSQL_ROOT_PASSWORD=changeme
+  db:
+    image: mysql:5.7
+    environment:
+      - MYSQL_ROOT_PASSWORD=changeme
