@@ -7,7 +7,7 @@ services:
       context: .
     container_name: powerdns_admin
     ports:
-      - "9191:80"
+      - "35000:80"
     logging:
       driver: json-file
       options:
