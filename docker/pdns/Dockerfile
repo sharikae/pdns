@@ -4,7 +4,7 @@ MAINTAINER Patrick Oberdorf <patrick@oberdorf.net>
 COPY assets/apt/preferences.d/pdns /etc/apt/preferences.d/pdns
 RUN apt-get update && apt-get install -y curl sudo \
 	&& curl https://repo.powerdns.com/FD380FBB-pub.asc | sudo apt-key add - \
-	&& echo "deb [arch=amd64] http://repo.powerdns.com/ubuntu xenial-auth-40 main" > /etc/apt/sources.list.d/pdns.list
+	&& echo "deb [arch=amd64] http://repo.powerdns.com/ubuntu xenial-auth-42 main" > /etc/apt/sources.list.d/pdns.list
 
 RUN apt-get update && apt-get install -y \
 	wget \
