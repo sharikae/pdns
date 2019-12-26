@@ -44,3 +44,4 @@ powerdnsadmin/static/generated
 
 .env.pdns
 .env.pdnsadmin
+db/

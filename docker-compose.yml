@@ -14,10 +14,10 @@ services:
         max-size: 50m
     env_file: .env.pdnsadmin
     depends_on:
-      - pdnsadmin_db
+      - pdnsadmin-db
     restart: unless-stopped
 
-  pdnsadmin_db:
+  pdnsadmin-db:
     image: mysql:5.7
     container_name: pdnsadmin_db
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
@@ -37,12 +37,14 @@ services:
       - "34000:80"
     env_file: .env.pdns
     depends_on:
-      - pdns_db
+      - pdns-db
     restart: unless-stopped
 
-  pdns_db:
+  pdns-db:
     image: mysql:5.7
     container_name: pdns_db
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - ./db/pdns_data:/var/lib/mysql
     env_file: .env.pdns
     restart: unless-stopped
