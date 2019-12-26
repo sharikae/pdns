@@ -6,6 +6,8 @@
 
 # pycharm
 .idea
+*.iml
+.python-version
 
 # vscode
 .vscode
