@@ -35,6 +35,7 @@ services:
       - "53:53"
       - "53:53/udp"
       - "34000:80"
+      - "36000:8081"
     env_file: .env.pdns
     depends_on:
       - pdns-db
@@ -45,6 +46,6 @@ services:
     container_name: pdns_db
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     volumes:
-      - ./db/pdns_data:/var/lib/mysql
+      - ./db2/pdns_data:/var/lib/mysql
     env_file: .env.pdns
     restart: unless-stopped
