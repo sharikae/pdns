@@ -25,27 +25,3 @@ services:
       - ./db/pdnsadmin_data:/var/lib/mysql
     env_file: .env.pdnsadmin
     restart: unless-stopped
-
-  pdns:
-    build:
-      dockerfile: docker/pdns/Dockerfile
-      context: .
-    container_name: pdns
-    ports:
-      - "53:53"
-      - "53:53/udp"
-      - "34000:80"
-      - "36000:8081"
-    env_file: .env.pdns
-    depends_on:
-      - pdns-db
-    restart: unless-stopped
-
-  pdns-db:
-    image: mysql:5.7
-    container_name: pdns_db
-    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
-    volumes:
-      - ./db2/pdns_data:/var/lib/mysql
-    env_file: .env.pdns
-    restart: unless-stopped
