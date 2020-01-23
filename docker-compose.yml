@@ -12,6 +12,9 @@ services:
       driver: json-file
       options:
         max-size: 50m
+    networks:
+      pdns-docker_pdns_network:
+        ipv4_address: 192.168.0.7
     env_file: .env.pdnsadmin
     depends_on:
       - pdnsadmin-db
@@ -23,5 +26,12 @@ services:
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     volumes:
       - ./db/pdnsadmin_data:/var/lib/mysql
+    networks:
+      pdns-docker_pdns_network:
+        ipv4_address: 192.168.0.8
     env_file: .env.pdnsadmin
     restart: unless-stopped
+
+networks:
+  pdns-docker_pdns_network:
+    external: true

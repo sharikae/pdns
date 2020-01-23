@@ -31,7 +31,6 @@ js_validation = Bundle('node_modules/bootstrap-validator/dist/validator.js',
 
 css_main = Bundle(
     'node_modules/bootstrap/dist/css/bootstrap.css',
-    'node_modules/font-awesome/css/font-awesome.css',
     'node_modules/ionicons/dist/css/ionicons.css',
     'node_modules/datatables.net-bs/css/dataTables.bootstrap.css',
     'node_modules/icheck/skins/square/blue.css',

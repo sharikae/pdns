@@ -4,7 +4,11 @@
 }
 
 table td {
-    font-family:'Roboto Mono' !important;
+    font-family:'Source Sans Pro','Helvetica Neue',Helvetica,Arial,sans-serif' !important;
+}
+
+input, button, select, textarea {
+    font-family:'Source Sans Pro','Helvetica Neue',Helvetica,Arial,sans-serif' !important;
 }
 
 /*Fit default macbook screen*/
